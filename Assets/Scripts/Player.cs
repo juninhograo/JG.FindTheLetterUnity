@@ -12,11 +12,12 @@ public class Player : MonoBehaviour
     public int Coins;
     public bool IsJumping = false;
     public bool JumpButtonPressed = false;
+    public bool IsPlayerCanFly = false;
+    public float FlyingForce = 0;
 
     private new Rigidbody2D rigidbody = null;
     private SpriteRenderer spriteRender = null;
     private float hMove = 0;
-
 
     public Text txtLives;
     public Text txtCoins;
@@ -36,6 +37,7 @@ public class Player : MonoBehaviour
         SetFlip();
         CheckIfPlayerIsMoving();
         CheckIfPlayerIsJumping();
+        CheckIfPlayerIsFlying();
     }
 
     void OnCollisionEnter2D(Collision2D collision2D)
@@ -44,6 +46,7 @@ public class Player : MonoBehaviour
         if (collision2D.gameObject.CompareTag(Constants.TAG_PLATFORM))
         {
             IsJumping = false;
+            IsPlayerCanFly = false;
         }
         else if (collision2D.gameObject.CompareTag(Constants.TAG_ENENMY))
         {
@@ -53,7 +56,7 @@ public class Player : MonoBehaviour
         {
             //add coins
         }
-        Debug.Log($"Start the collision {collision2D.gameObject.tag}");
+        //Debug.Log($"Start the collision {collision2D.gameObject.tag}");
     }
 
     void OnCollisionExit2D(Collision2D collision2D)
@@ -62,7 +65,7 @@ public class Player : MonoBehaviour
         {
             IsJumping = true;
         }
-        Debug.Log($"Stop the collision {collision2D.gameObject.tag}");
+        //Debug.Log($"Stop the collision {collision2D.gameObject.tag}");
     }
 
     private void OnStartSetting()
@@ -80,7 +83,7 @@ public class Player : MonoBehaviour
 
     private void CheckSpeedButtonPressed()
     {
-        if (Input.GetKey(KeyCode.Z))
+        if (Input.GetKey(KeyCode.A))
             hMove *= MegaSpeed;
     }
 
@@ -104,17 +107,41 @@ public class Player : MonoBehaviour
     //Check if the player is jumping
     private void CheckIfPlayerIsJumping()
     {
-        Debug.Log($"IsJumping {IsJumping}");
+        //Debug.Log($"IsJumping {IsJumping}");
         var animator = GetComponent<Animator>();
         animator.SetBool("IsJumping", IsJumping);
-        JumpButtonPressed = Input.GetKey(KeyCode.Space);
-        if (JumpButtonPressed && !IsJumping)
+        JumpButtonPressed = Input.GetKey(KeyCode.S);
+        
+        if (JumpButtonPressed)
         {
-            Debug.Log($"JumpForce is {JumpForce}");
-            rigidbody.AddForce(new Vector2(0, JumpForce));
-            GetComponent<AudioSource>().Play();
+            if (!IsJumping)
+            {
+                //Debug.Log($"JumpForce is {JumpForce}");
+                rigidbody.AddForce(new Vector2(0, JumpForce));
+                GetComponent<AudioSource>().Play();
+                IsPlayerCanFly = false;
+            }
+            else
+                IsPlayerCanFly = true;
         }
 
         animator.SetBool("JumpButtonPressed", JumpButtonPressed);
+    }
+
+
+    //Check if the player is flying
+    private void CheckIfPlayerIsFlying() 
+    {
+        var animator = GetComponent<Animator>();
+
+        if (IsPlayerCanFly && Input.GetKey(KeyCode.D))
+        {
+            Debug.Log($"canFly {true}");
+            rigidbody.velocity = new Vector2(rigidbody.velocity.x, FlyingForce);
+            animator.SetBool("IsFlying", true);
+        }
+        else
+            animator.SetBool("IsFlying", false);
+
     }
 }

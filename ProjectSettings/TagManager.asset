@@ -7,6 +7,7 @@ TagManager:
   - Platforms
   - Enemy
   - Coins
+  - NoEffects
   layers:
   - Default
   - TransparentFX
