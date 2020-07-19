@@ -8,6 +8,9 @@ TagManager:
   - Enemy
   - Coins
   - NoEffects
+  - Friend
+  - Trampoline
+  - Water
   layers:
   - Default
   - TransparentFX
