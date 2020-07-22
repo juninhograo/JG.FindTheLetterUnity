@@ -61,8 +61,10 @@
      <Compile Include="Assets\Scripts\CameraController.cs" />
      <Compile Include="Assets\Scripts\Coin.cs" />
      <Compile Include="Assets\Scripts\GameCore.cs" />
+     <Compile Include="Assets\Scripts\Key.cs" />
      <Compile Include="Assets\Scripts\MovementBehavior.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />
+     <Compile Include="Assets\Scripts\Treasure.cs" />
  <Reference Include="UnityEngine">
  <HintPath>D:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>

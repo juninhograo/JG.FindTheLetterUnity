@@ -3,8 +3,10 @@ ScriptsOnlyBuild:
     Assembly-CSharp.dll:
     - CameraController
     - GameCore
+    - Key
     - MovementBehavior
     - Player
+    - Treasure
     Unity.2D.Tilemap.Editor.dll:
     - UnityEditor.Tilemaps.GridBrush
     - UnityEditor.Tilemaps.GridBrushEditor
@@ -21,6 +23,7 @@ ScriptsOnlyBuild:
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.AnimatorStateTransitionInspector
     - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
@@ -96,6 +99,10 @@ ScriptsOnlyBuild:
       Script: {instanceID: 13044}
     - Class: 114
       Script: {instanceID: 13046}
+    - Class: 114
+      Script: {instanceID: 110996}
+    - Class: 114
+      Script: {instanceID: 111004}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -113,6 +120,8 @@ ScriptsOnlyBuild:
     - Class: 223
       Script: {instanceID: 0}
     - Class: 224
+      Script: {instanceID: 0}
+    - Class: 255
       Script: {instanceID: 0}
     - Class: 19719996
       Script: {instanceID: 0}
@@ -137,7 +146,7 @@ ScriptsOnlyBuild:
     className: TMP_SelectionCaret
   - hash:
       serializedVersion: 2
-      Hash: 0916ce8e96d0910559cde506d79b2b24
+      Hash: 2f04138277889ae3a6dfc2e4d28c4612
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Player
@@ -389,7 +398,7 @@ ScriptsOnlyBuild:
     className: VerticalLayoutGroup
   - hash:
       serializedVersion: 2
-      Hash: 791101840f3776bdc491dd41ec2daa5c
+      Hash: e7c1ba3fdf3f307d084825d561dc227e
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MovementBehavior
@@ -473,7 +482,7 @@ ScriptsOnlyBuild:
     className: MarkerTrack
   - hash:
       serializedVersion: 2
-      Hash: 249fbb3d7915f7e36c139e9f8242bd80
+      Hash: bb80bca016538e98d5ef9f79e40a0b79
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameCore
@@ -585,7 +594,19 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: aef9386513e10c2b58b4c2172faf4e3c
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Treasure
+  - hash:
+      serializedVersion: 2
+      Hash: aef9386513e10c2b58b4c2172faf4e3c
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Key
   platform: 5
   scenePathNames:
   - Assets/Scenes/Step1.unity
-  playerPath: D:/Projects/Games/GamePlay/FindTheLetterUnity.exe
+  playerPath: D:/Projects/Games/FindTheLetterUnity/GamePlay/FindTheLetterUnity.exe

@@ -8,6 +8,7 @@ public class MovementBehavior : MonoBehaviour
     public bool ActiveMegaSpeed;
     public bool ActiveStop;
     public bool ActiveSlowOnCarring;
+    public bool ActiveFlipOnTouch = true;
     public float Delay = 0f;
     public Constants.DirectionType DirectionType;
 
@@ -40,7 +41,7 @@ public class MovementBehavior : MonoBehaviour
 
         if (ActiveStop)
             IsStopped = collision2D.gameObject.CompareTag(Constants.TAG_PLAYER);
-        else if (collision2D.gameObject.CompareTag(Constants.TAG_PLAYER))
+        else if (collision2D.gameObject.CompareTag(Constants.TAG_PLAYER) && ActiveFlipOnTouch)
             IsCollided = true;
 
         if (ActiveSlowOnCarring)
@@ -53,8 +54,9 @@ public class MovementBehavior : MonoBehaviour
         if (collision2D.gameObject.CompareTag(Constants.TAG_PLATFORM_NO_EFFECT) || collision2D.gameObject.CompareTag(Constants.TAG_PLATFORM) || collision2D.gameObject.CompareTag(Constants.TAG_FRIEND) || collision2D.gameObject.CompareTag(Constants.TAG_ENENMY))
             IsCollided = false;
 
-        //if (collision2D.gameObject.CompareTag(Constants.TAG_PLAYER))
-        //    speed += 1;
+        if (ActiveSlowOnCarring)
+            if (collision2D.gameObject.CompareTag(Constants.TAG_PLAYER))
+                speed += 1;
 
         IsStopped = false;
     }

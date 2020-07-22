@@ -1,37 +1,44 @@
-﻿using Assets.Core;
+﻿using System.Collections.Generic;
+using Assets.Core;
 using UnityEngine;
 using UnityEngine.UI;
-//using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
     public float JumpForce;
+    public float SwimmingForce;
     public float TrampolineJumpForce;
     public float MaxSpeed;
     public float MegaSpeed;
     public int Lives;
     public int Coins;
-    public bool IsJumping;
-    public bool JumpButtonPressed;
-    public bool IsPlayerCanFly;
-    public bool InWater;
-
     public float FlyingForce;
     public Text txtLives;
     public Text txtCoins;
     public GameCore GameCore;
+    public IList<GameObject> Items;
 
+    private bool isJumping;
+    private bool isWalking;
+    private bool isRunning;
+    private bool isFlying;
+    private bool isSwimming;
     private new Rigidbody2D rigidbody;
     private SpriteRenderer spriteRender;
     private Animator animator;
     private float hMove;
+    private float speed;
 
     void Start()
     {
         UpdateLives(0);
         UpdateCoins(0);
         rigidbody = GetComponent<Rigidbody2D>();
+        spriteRender = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
+        Items = new List<GameObject>();
+        //
+        rigidbody.drag = Helper.GetDragFromAcceleration(Physics.gravity.magnitude, MaxSpeed);
         //controls = new GameControllerInput();
-
         //#region Joystick Methods
         //controls.Cross.ActionButonX.performed += ctx => CheckIfPlayerIsJumping(true);
         //controls.Square.ActionButtonSquare.performed += ctx => CheckSpeedButtonPressed(true);
@@ -40,21 +47,20 @@ public class Player : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        OnStartSetting();
-        SetSpeed();
-        SetFlip();
-        CheckIfPlayerIsMoving();
-        CheckIfPlayerIsJumping();
-        CheckIfPlayerIsFlying();
+        Flip();
+        Run();
+        Walk();
+        Jump();
+        Fly();
+        Swimming();
     }
 
     void OnTriggerEnter2D(Collider2D collision2D)
     {
-
         if (collision2D.gameObject.CompareTag(Constants.TAG_WATER))
-            InWater = true;
+            isSwimming = true;
 
         if (collision2D.gameObject.CompareTag(Constants.TAG_COINS))
         {
@@ -66,17 +72,20 @@ public class Player : MonoBehaviour
     void OnTriggerExit2D(Collider2D collision2D)
     {
         if (collision2D.gameObject.CompareTag(Constants.TAG_WATER))
-            InWater = false;
+        {
+            isSwimming = false;
+            isJumping = true;
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision2D)
     {
-        //Debug.Log($"CollisionEnter2D {collision2D.gameObject.tag}");
         //control the jump
-        if (collision2D.gameObject.CompareTag(Constants.TAG_PLATFORM) || collision2D.gameObject.CompareTag(Constants.TAG_FRIEND) || collision2D.gameObject.CompareTag(Constants.TAG_ENENMY))
+        if ((collision2D.gameObject.CompareTag(Constants.TAG_PLATFORM) || collision2D.gameObject.CompareTag(Constants.TAG_FRIEND) || collision2D.gameObject.CompareTag(Constants.TAG_ENENMY))
+            && !collision2D.gameObject.CompareTag(Constants.TAG_WATER))
         {
-            IsJumping = false;
-            IsPlayerCanFly = false;
+            isJumping = false;
+            isFlying = false;
         }
 
         if (collision2D.gameObject.CompareTag(Constants.TAG_ENENMY))
@@ -86,17 +95,17 @@ public class Player : MonoBehaviour
 
         if (collision2D.gameObject.CompareTag(Constants.TAG_TRAMPOLINE))
         {
-            IsJumping = true;
-            IsPlayerCanFly = IsJumping;
-            ActionJump(TrampolineJumpForce);
+            isJumping = true;
+            isFlying = true;
+            GetImpulse(TrampolineJumpForce);
         }
     }
 
     void OnCollisionExit2D(Collision2D collision2D)
     {
-        if (collision2D.gameObject.CompareTag(Constants.TAG_PLATFORM) || collision2D.gameObject.CompareTag(Constants.TAG_FRIEND) || collision2D.gameObject.CompareTag(Constants.TAG_ENENMY))
+        if ((collision2D.gameObject.CompareTag(Constants.TAG_PLATFORM) || collision2D.gameObject.CompareTag(Constants.TAG_FRIEND) || collision2D.gameObject.CompareTag(Constants.TAG_ENENMY)) && !collision2D.gameObject.CompareTag(Constants.TAG_WATER))
         {
-            IsJumping = true;
+            isJumping = true;
         }
     }
 
@@ -105,6 +114,7 @@ public class Player : MonoBehaviour
     {
         Coins += coin;
         txtCoins.text = Coins.ToString();
+        GameCore.PlayGetCoinAudio();
     }
 
     private void UpdateLives(int live)
@@ -113,37 +123,28 @@ public class Player : MonoBehaviour
         if (Lives > 0)
         {
             txtLives.text = Lives.ToString();
-            //Debug.Log($"UpdateLives {Lives}");
+            GameCore.PlayGetHurtAudio();
         }
         else
-        {
-            //restart the game
             GameCore.GameOver();
+    }
+
+    private void Run(bool joystickButtonPressed = false)
+    {
+        speed = MaxSpeed;
+        isRunning = false;
+        if ((Input.GetKey(KeyCode.Q) || joystickButtonPressed) && !isJumping && hMove != 0)
+        {
+            isRunning = true;
+            speed = MegaSpeed;
         }
+        animator.SetBool("IsRunning", isRunning);
     }
 
-    private void OnStartSetting()
+    private void Flip()
     {
-
-        spriteRender = GetComponent<SpriteRenderer>();
-        animator = GetComponent<Animator>();
         hMove = Input.GetAxis("Horizontal");
-    }
 
-    private void SetSpeed()
-    {
-        CheckSpeedButtonPressed();
-        rigidbody.velocity = new Vector2(hMove * MaxSpeed, rigidbody.velocity.y);
-    }
-
-    private void CheckSpeedButtonPressed(bool joystickButtonPressed = false)
-    {
-        if ((Input.GetKey(KeyCode.Q) || joystickButtonPressed) && !IsJumping)
-            hMove *= MegaSpeed;
-    }
-
-    private void SetFlip()
-    {
         //flip
         if (hMove < 0)
             spriteRender.flipX = true;
@@ -152,48 +153,56 @@ public class Player : MonoBehaviour
     }
 
     //Check if the player is moving
-    private void CheckIfPlayerIsMoving()
+    private void Walk()
     {
-        var isMoving = hMove != 0;
-        var animator = GetComponent<Animator>();
-        animator.SetBool("IsWalking", isMoving);
+        isWalking = hMove != 0;
+        transform.position += new Vector3(hMove, 0f) * Time.deltaTime * speed;
+        animator.SetBool("IsWalking", isWalking);
     }
 
     //Check if the player is jumping            
-    private void CheckIfPlayerIsJumping(bool joystickButtonPressed = false)
+    private void Jump(bool joystickButtonPressed = false)
     {
-        animator.SetBool("IsJumping", IsJumping);
-        JumpButtonPressed = Input.GetKey(KeyCode.Space) || joystickButtonPressed;
-
-        if (JumpButtonPressed)
+        var buttonPressed = Input.GetKey(KeyCode.Space) || joystickButtonPressed;
+        if (buttonPressed)
         {
-            if (!IsJumping)
-                ActionJump(JumpForce);
-
-            IsPlayerCanFly = true;
+            if (!isJumping && !isSwimming)
+            {
+                GetImpulse(JumpForce);
+            }
         }
 
-        animator.SetBool("JumpButtonPressed", JumpButtonPressed);
+        animator.SetBool("IsJumping", isJumping && !isSwimming);
     }
 
-    private void ActionJump(float jumpForce)
+    private void GetImpulse(float impulseForce)
     {
-        rigidbody.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
-        GetComponent<AudioSource>().Play();
-        IsPlayerCanFly = false;
+        rigidbody.AddForce(new Vector2(0f, impulseForce), ForceMode2D.Impulse);
+        GameCore.PlayJumpAudio();
     }
 
     //Check if the player is flying
-    private void CheckIfPlayerIsFlying(bool joystickButtonPressed = false)
+    private void Fly(bool joystickButtonPressed = false)
     {
-        if ((IsPlayerCanFly && Input.GetKey(KeyCode.W) || joystickButtonPressed) && IsJumping)
+        if ((Input.GetKey(KeyCode.W) || joystickButtonPressed) && isJumping && !isFlying)
         {
             rigidbody.velocity = new Vector2(rigidbody.velocity.x, FlyingForce);
             animator.SetBool("IsFlying", true);
         }
         else
             animator.SetBool("IsFlying", false);
+    }
 
+    private void Swimming(bool joystickButtonPressed = false)
+    {
+        if (isSwimming)
+        {
+            var buttonPressed = Input.GetKey(KeyCode.E) || joystickButtonPressed;
+
+            if (buttonPressed)
+                GetImpulse(SwimmingForce);
+        }
+        animator.SetBool("IsSwimming", isSwimming);
     }
     #endregion
 }

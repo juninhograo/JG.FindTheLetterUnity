@@ -11,6 +11,8 @@ TagManager:
   - Friend
   - Trampoline
   - Water
+  - Key
+  - Treasure
   layers:
   - Default
   - TransparentFX
