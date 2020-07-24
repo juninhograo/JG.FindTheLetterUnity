@@ -13,7 +13,7 @@ The objective of the game is to open the chest using the hidden key. Into the ga
 </ul>
 
 <h3>Requirements</h3>
-For now, it only works in Windows You can download the "GamePlay" folder and execute the file FindTheLetterUnity.exe (your antivirus system can detect it as a strange application but there is no risk):
+For now, it only works in Windows You can download the "GamePlay" folder and execute the file FindTheLetterUnity.exe (your antivirus system can detect it as a strange application but there is no risk). Or you can download from the last release here: https://github.com/juninhograo/JG.FindTheLetterUnity/releases/tag/v1.0
 
 <h3>Language</h3>
 English language 
