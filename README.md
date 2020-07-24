@@ -18,12 +18,14 @@ You can download the "GamePlay" folder and execute the file FindTheLetterUnity.e
 <h3>Language</h3>
 English language 
 
-Preview
+<h3>Preview</h3>
 <p><img alt="actions" src="https://raw.githubusercontent.com/juninhograo/JG.FindTheLetterUnity/master/GamePlay/Preview/actions.png"></p>
 <p><img alt="pause menu" src="https://raw.githubusercontent.com/juninhograo/JG.FindTheLetterUnity/master/GamePlay/Preview/pause-menu.png"></p>
 <p><img alt="actions" src="https://raw.githubusercontent.com/juninhograo/JG.FindTheLetterUnity/master/GamePlay/Preview/step1.png"></p>
 <p><img alt="actions" src="https://raw.githubusercontent.com/juninhograo/JG.FindTheLetterUnity/master/GamePlay/Preview/found-the-letter.png"></p>
 
+<h3>Special Credits</h3>
+<p>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a></p>
 
 
 
