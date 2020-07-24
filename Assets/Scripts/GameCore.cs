@@ -1,14 +1,19 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
 public class GameCore : MonoBehaviour
 {
     public GameObject FinishPanel;
+    public GameObject FindTheKeyPanel;
     public GameObject PausePanel;
     public GameObject GameOverPanel;
     public GameObject Key;
+    public Text txtFinalMessage;
 
     private bool IsPaused = false;
     private bool IsFinished = false;
+    private bool IsShowFindKeyMessage = false;
     private bool IsGameOver = false;
 
     //audios clips
@@ -20,6 +25,8 @@ public class GameCore : MonoBehaviour
     private AudioSource audioCoin;
     private AudioSource audioJump;
     private AudioSource audioHurt;
+    private AudioSource audioAlertTheme;
+    private AudioSource audioSelectOption;
 
     void Start()
     {
@@ -31,6 +38,8 @@ public class GameCore : MonoBehaviour
         audioCoin = audioSource[4];
         audioJump = audioSource[5];
         audioHurt = audioSource[6];
+        audioAlertTheme = audioSource[7];
+        audioSelectOption = audioSource[8];
         audioGameTheme.Play();
     }
 
@@ -38,7 +47,7 @@ public class GameCore : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (IsPaused)
+            if (IsPaused || IsShowFindKeyMessage)
                 Resume();
             else
                 Pause();
@@ -57,8 +66,10 @@ public class GameCore : MonoBehaviour
     public void Resume()
     {
         PausePanel.SetActive(false);
+        FindTheKeyPanel.SetActive(false);
         Time.timeScale = 1f;
         IsPaused = false;
+        IsShowFindKeyMessage = false;
         audioGameTheme.Play();
     }
     public void Finish()
@@ -66,8 +77,18 @@ public class GameCore : MonoBehaviour
         FinishPanel.SetActive(true);
         Time.timeScale = 0f;
         IsFinished = true;
+        audioGameTheme.Pause();
         audioFinishTheme.Play();
     }
+    public void FindTheKeyMessage(bool showMessage)
+    {
+        FindTheKeyPanel.SetActive(showMessage);
+        Time.timeScale = 0f;
+        IsShowFindKeyMessage = true;
+        audioGameTheme.Pause();
+        audioAlertTheme.Play();
+    }
+    
     public void ShowKeyUI()
     {
         Key.SetActive(true);
@@ -97,7 +118,7 @@ public class GameCore : MonoBehaviour
         GameOverPanel.SetActive(true);
         Time.timeScale = 0f;
         IsGameOver = true;
-        audioGameTheme.Stop();
+        audioGameTheme.Pause();
         audioGameOverTheme.Play();
     }
     public void Restart()
@@ -108,7 +129,33 @@ public class GameCore : MonoBehaviour
         Time.timeScale = 1f;
         IsPaused = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        audioGameOverTheme.Stop();
+        audioGameOverTheme.Pause();
         audioGameTheme.Play();
+    }
+    public void Quit()
+    {
+        Application.Quit();
+    }
+    public void WrongAnswer()
+    {
+        Answer(false);
+    }
+    public void RightAnswer()
+    {
+        Answer(true);
+    }
+    private void Answer(bool right)
+    {
+        if (right)
+        {
+            txtFinalMessage.text = "Yes! Right answer!";
+            PlayGetCoinAudio();
+        }
+        else
+        {
+            txtFinalMessage.text = "No! Wrong answer!";
+            PlayGetHurtAudio();
+        }
+            
     }
 }

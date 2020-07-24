@@ -6,9 +6,13 @@ public class Treasure : MonoBehaviour
     public Player player;
     void OnCollisionEnter2D(Collision2D collision2D)
     {
-        if (collision2D.gameObject.CompareTag(Constants.TAG_PLAYER) && player.Items.Any(c => c.tag == Constants.TAG_KEY))
+        if (collision2D.gameObject.CompareTag(Constants.TAG_PLAYER))
         {
-            player.GameCore.Finish();
+            if(player.Items.Any(c => c.tag == Constants.TAG_KEY))
+                player.GameCore.Finish();
+            else
+                player.GameCore.FindTheKeyMessage(true);
+
         }
     }
 }

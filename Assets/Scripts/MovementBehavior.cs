@@ -81,13 +81,10 @@ public class MovementBehavior : MonoBehaviour
     {
         if (ActiveMegaSpeed)
         {
-            Timer += Time.deltaTime;
+            Timer = System.DateTime.Now.Second;
             speed = MaxSpeed;
-            if (Timer >= Delay)
-            {
-                Timer = 0f;
+            if (Timer % Delay == 0)
                 speed = MaxSpeed + MegaSpeed;
-            }
         }
     }
 

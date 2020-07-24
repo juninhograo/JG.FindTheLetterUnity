@@ -9,6 +9,7 @@ ScriptsOnlyBuild:
     - Treasure
     Unity.2D.Tilemap.Editor.dll:
     - UnityEditor.Tilemaps.GridBrush
+    - UnityEditor.Tilemaps.GridBrushEditor
     - UnityEditor.Tilemaps.GridPaintPaletteClipboard
     - UnityEditor.Tilemaps.GridPaintPaletteWindow
     - UnityEditor.Tilemaps.GridPaintingState
@@ -22,7 +23,6 @@ ScriptsOnlyBuild:
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
-    - UnityEditor.Graphs.AnimationStateMachine.AnimatorStateTransitionInspector
     - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
@@ -75,33 +75,33 @@ ScriptsOnlyBuild:
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 584}
+      Script: {instanceID: 586}
     - Class: 114
-      Script: {instanceID: 11160}
+      Script: {instanceID: 11162}
     - Class: 114
-      Script: {instanceID: 11190}
+      Script: {instanceID: 11172}
     - Class: 114
-      Script: {instanceID: 11328}
+      Script: {instanceID: 11194}
     - Class: 114
-      Script: {instanceID: 11368}
+      Script: {instanceID: 11332}
     - Class: 114
-      Script: {instanceID: 11770}
+      Script: {instanceID: 11372}
     - Class: 114
-      Script: {instanceID: 12172}
+      Script: {instanceID: 11774}
     - Class: 114
-      Script: {instanceID: 12332}
+      Script: {instanceID: 12176}
     - Class: 114
-      Script: {instanceID: 12666}
+      Script: {instanceID: 12336}
     - Class: 114
-      Script: {instanceID: 12810}
+      Script: {instanceID: 12384}
     - Class: 114
-      Script: {instanceID: 13044}
+      Script: {instanceID: 12672}
     - Class: 114
-      Script: {instanceID: 13046}
+      Script: {instanceID: 12816}
     - Class: 114
-      Script: {instanceID: 110996}
+      Script: {instanceID: 13050}
     - Class: 114
-      Script: {instanceID: 111004}
+      Script: {instanceID: 13052}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -120,7 +120,7 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 224
       Script: {instanceID: 0}
-    - Class: 255
+    - Class: 235
       Script: {instanceID: 0}
     - Class: 19719996
       Script: {instanceID: 0}
@@ -137,6 +137,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: CanvasScaler
+  - hash:
+      serializedVersion: 2
+      Hash: aef9386513e10c2b58b4c2172faf4e3c
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Treasure
   - hash:
       serializedVersion: 2
       Hash: c42672c997f8be6b1aa86a927ebea785
@@ -415,6 +421,12 @@ ScriptsOnlyBuild:
     className: SignalReceiver
   - hash:
       serializedVersion: 2
+      Hash: aef9386513e10c2b58b4c2172faf4e3c
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Key
+  - hash:
+      serializedVersion: 2
       Hash: 5ad4aa237d47ac2bab17bacb672edf7a
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -481,7 +493,7 @@ ScriptsOnlyBuild:
     className: MarkerTrack
   - hash:
       serializedVersion: 2
-      Hash: bb80bca016538e98d5ef9f79e40a0b79
+      Hash: 45b479ec6588b4a042eaa03d66705907
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameCore
@@ -593,18 +605,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
-  - hash:
-      serializedVersion: 2
-      Hash: aef9386513e10c2b58b4c2172faf4e3c
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: Treasure
-  - hash:
-      serializedVersion: 2
-      Hash: aef9386513e10c2b58b4c2172faf4e3c
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: Key
   platform: 5
   scenePathNames:
   - Assets/Scenes/Step1.unity

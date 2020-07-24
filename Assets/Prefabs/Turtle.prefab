@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1550620097178295105}
   - component: {fileID: -3335096821634833303}
   - component: {fileID: -1709182206862735724}
+  - component: {fileID: 8109349284832323978}
   m_Layer: 0
   m_Name: Turtle
   m_TagString: Friend
@@ -143,10 +144,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 874f5ea9792cec44696b583dcb642c3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxSpeed: 3
-  MegaSpeed: 4
+  MaxSpeed: -3
+  MegaSpeed: 0
   ActiveMegaSpeed: 0
   ActiveStop: 0
   ActiveSlowOnCarring: 0
-  Delay: 1.5
+  ActiveFlipOnTouch: 1
+  Delay: 2
   DirectionType: 1
+--- !u!95 &8109349284832323978
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1332814326472172540}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cd442c3a4f408e8488bdad2ccc3dfad1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
