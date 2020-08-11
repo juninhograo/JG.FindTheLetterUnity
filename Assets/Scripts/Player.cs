@@ -112,21 +112,27 @@ public class Player : MonoBehaviour
     #region Private Methods
     private void UpdateCoins(int coin)
     {
-        Coins += coin;
-        txtCoins.text = Coins.ToString();
-        GameCore.PlayGetCoinAudio();
+        if (txtCoins != null)
+        {
+            Coins += coin;
+            txtCoins.text = Coins.ToString();
+            GameCore.PlayGetCoinAudio();
+        }
     }
 
     private void UpdateLives(int live)
     {
-        Lives += live;
-        if (Lives > 0)
+        if (txtLives != null)
         {
-            txtLives.text = Lives.ToString();
-            GameCore.PlayGetHurtAudio();
+            Lives += live;
+            if (Lives > 0)
+            {
+                txtLives.text = Lives.ToString();
+                GameCore.PlayGetHurtAudio();
+            }
+            else
+                GameCore.GameOver();
         }
-        else
-            GameCore.GameOver();
     }
 
     private void Run(bool joystickButtonPressed = false)

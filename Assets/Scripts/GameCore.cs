@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Assets.Core;
+using System;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -13,6 +15,7 @@ public class GameCore : MonoBehaviour
 
     private bool IsPaused = false;
     private bool IsFinished = false;
+    private bool IsMainMenu = false;
     private bool IsShowFindKeyMessage = false;
     private bool IsGameOver = false;
 
@@ -55,12 +58,13 @@ public class GameCore : MonoBehaviour
     }
     public void Pause()
     {
-        if (!IsFinished && !IsGameOver)
+        if (!IsFinished && !IsGameOver && !IsMainMenu)
         {
             PausePanel.SetActive(true);
             Time.timeScale = 0f;
             IsPaused = true;
             audioGameTheme.Pause();
+            audioSelectOption.Play();
         }
     }
     public void Resume()
@@ -70,6 +74,7 @@ public class GameCore : MonoBehaviour
         Time.timeScale = 1f;
         IsPaused = false;
         IsShowFindKeyMessage = false;
+        audioSelectOption.Play();
         audioGameTheme.Play();
     }
     public void Finish()
@@ -88,7 +93,7 @@ public class GameCore : MonoBehaviour
         audioGameTheme.Pause();
         audioAlertTheme.Play();
     }
-    
+
     public void ShowKeyUI()
     {
         Key.SetActive(true);
@@ -96,7 +101,15 @@ public class GameCore : MonoBehaviour
         IsFinished = false;
         IsPaused = false;
         IsGameOver = false;
+        IsMainMenu = false;
         audioKeyUI.Play();
+    }
+    public void MainMenu()
+    {
+        Time.timeScale = 0f;
+        IsMainMenu = true;
+        audioGameTheme.Pause();
+        audioFinishTheme.Play();
     }
     public void PlayJumpAudio()
     {
@@ -132,30 +145,40 @@ public class GameCore : MonoBehaviour
         audioGameOverTheme.Pause();
         audioGameTheme.Play();
     }
+    public void SelectScene(string sceneName)
+    {
+        if (!string.IsNullOrEmpty(sceneName))
+        {
+            Time.timeScale = 1f;
+            audioSelectOption.Play();
+            if (sceneName == Constants.MAIN_SCENE)
+            {
+                audioGameOverTheme.Pause();
+                audioGameTheme.Pause();
+                Time.timeScale = 0f;
+            }
+
+            SceneManager.LoadScene(sceneName);
+        }
+    }
     public void Quit()
     {
         Application.Quit();
     }
     public void WrongAnswer()
     {
-        Answer(false);
+        Answer(false, "No! Wrong answer!");
     }
-    public void RightAnswer()
+    public void RightAnswer(string message)
     {
-        Answer(true);
+        Answer(true, message);
     }
-    private void Answer(bool right)
+    private void Answer(bool right, string message)
     {
         if (right)
-        {
-            txtFinalMessage.text = "Yes! Right answer!";
             PlayGetCoinAudio();
-        }
         else
-        {
-            txtFinalMessage.text = "No! Wrong answer!";
             PlayGetHurtAudio();
-        }
-            
+        txtFinalMessage.text = message;
     }
 }

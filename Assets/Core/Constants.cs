@@ -13,6 +13,8 @@
         public static readonly string TAG_KEY = "Key";
         public static readonly string TAG_TREASURE = "Treasure";
 
+        public static readonly string MAIN_SCENE = "MainMenu";
+
         public enum DirectionType
         {
             Horizontal = 1,
