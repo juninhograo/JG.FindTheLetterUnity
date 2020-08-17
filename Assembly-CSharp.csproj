@@ -58,6 +58,7 @@
      <Compile Include="Assets\Core\CompleteCameraController.cs" />
      <Compile Include="Assets\Core\Constants.cs" />
      <Compile Include="Assets\Core\Helper.cs" />
+     <Compile Include="Assets\Scenes\demoScenes\Movement.cs" />
      <Compile Include="Assets\Scripts\CameraController.cs" />
      <Compile Include="Assets\Scripts\Coin.cs" />
      <Compile Include="Assets\Scripts\GameCore.cs" />

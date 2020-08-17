@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/StepB.unity
     guid: 84fb5c2dd7fc0c5448c374cc7ec74ccf
+  - enabled: 1
+    path: Assets/Scenes/StepC.unity
+    guid: dd0cf3f763eb38a4cbd443e2f509a64c
   m_configObjects: {}
